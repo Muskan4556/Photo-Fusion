@@ -1,8 +1,8 @@
 "use client";
 import UploadButton from "./UploadButton";
-import Images from "./Images";
 import { useImageData } from "../hooks/gallery/useGalleryData";
 import Loader from "../components/Loader";
+import ImageInfo from "../components/ImageInfo";
 
 const Gallery = () => {
   const data = useImageData();
@@ -25,7 +25,7 @@ const Gallery = () => {
       <div className="my-8">
         <div className="md:mx-12 flex flex-col md:flex-row gap-8 flex-wrap">
           {data.map((resource) => (
-            <Images
+            <ImageInfo
               key={resource.public_id}
               publicId={resource.public_id}
               tags={resource.tags}

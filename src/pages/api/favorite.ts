@@ -12,7 +12,7 @@ export default async function getImages(
         .expression("resource_type:image AND tags=favorite")
         .sort_by("created_at", "desc")
         .with_field("tags")
-        .max_results(30)
+        .max_results(5)
         .execute()) as { resources: SearchResult[] };
 
       res.status(200).json({ success: true, data: result.resources });

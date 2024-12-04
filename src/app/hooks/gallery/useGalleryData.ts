@@ -1,11 +1,10 @@
 "use client";
 import { SearchResult } from "@/pages/api/gallery";
-import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 
 export const useImageData = () => {
   const [imageInfo, setImageInfo] = useState<SearchResult[] | null>(null);
-  const router = useRouter();
+  const [refresh, setRefresh] = useState(0);
 
   const fetchImageInfo = useCallback(async () => {
     try {
@@ -15,14 +14,15 @@ export const useImageData = () => {
       }
       const data = await response.json();
       setImageInfo(data.data);
-      router.refresh();
+      // router.refresh();
+      setRefresh(prev => prev + 1);
     } catch (err) {
       console.error(err);
     }
-  }, [router]);
+  }, []);
   useEffect(() => {
     fetchImageInfo();
-  }, [fetchImageInfo]);
+  }, [fetchImageInfo, refresh]);
   
   return imageInfo;
 };

@@ -28,7 +28,7 @@ const items = [
     icon: <Files style={{ height: "100%", width: "100%" }} />,
   },
   {
-    title: "Favorite",
+    title: "Favorites",
     url: "/favorite",
     icon: <Heart style={{ height: "100%", width: "100%" }} />,
   },
@@ -37,7 +37,7 @@ const items = [
 export function AppSidebar() {
   return (
     <Sidebar>
-      <SidebarHeader className="pt-8 px-4 md:text-2xl text-xl font-bold tracking-tight text-blue-600">
+      <SidebarHeader className="pt-8 -mb-1 px-4 md:text-2xl text-xl font-bold tracking-tight text-blue-600">
         Library
       </SidebarHeader>
       <Separator className="my-2" />

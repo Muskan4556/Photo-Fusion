@@ -6,10 +6,8 @@ import {
   CldUploadButton,
   CloudinaryUploadWidgetResults,
 } from "next-cloudinary";
-import { useRouter } from "next/navigation";
 
 const UploadButton = () => {
-  const router = useRouter();
   return (
     <Button
       variant={"outline"}
@@ -19,9 +17,7 @@ const UploadButton = () => {
       <div>
         <CldUploadButton
           onSuccess={(result: CloudinaryUploadWidgetResults) => {
-            if (result.info) {
-              router.refresh();
-            }
+            console.log(result);
           }}
           uploadPreset="gnimpbu4"
         />
