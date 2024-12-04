@@ -10,9 +10,9 @@ const Upload = () => {
   return (
     <div className="mx-4 my-8">
       <CldUploadButton
-        onSuccess={(result: CloudinaryUploadWidgetResults) =>
+        onSuccess={(result: CloudinaryUploadWidgetResults) => {
           console.log(result.info)
-        }
+        }}
         uploadPreset="gnimpbu4"
         className="border border-blue-600 hover:bg-blue-500 px-3 py-2 rounded-md"
       />
