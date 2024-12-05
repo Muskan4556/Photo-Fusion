@@ -22,7 +22,7 @@ export default async function getImages(
         .expression("resource_type:image")
         .sort_by("created_at", "desc")
         .with_field("tags")
-        .max_results(5)
+        .max_results(8)
         .execute()) as { resources: SearchResult[] };
 
       res.status(200).json({ success: true, data: result.resources });

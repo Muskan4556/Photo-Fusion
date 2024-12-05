@@ -16,9 +16,12 @@ const Favorite = () => {
     }
   }, [data]);
 
-  const handleFavouriteChange = (publicId: string, currentInfo: SearchResult[]) => {
+  const handleFavouriteChange = (
+    publicId: string,
+    currentInfo: SearchResult[]
+  ) => {
     const updatedData = currentInfo?.filter((c) => c.public_id != publicId);
-    setCurrentImageInfo(updatedData)
+    setCurrentImageInfo(updatedData);
   };
 
   if (!data || !currentImageInfo) {
@@ -36,18 +39,16 @@ const Favorite = () => {
         {/* <UploadButton /> */}
       </div>
       <div className="my-8">
-        <div className="md:mx-12 flex flex-col md:flex-row gap-8 flex-wrap">
-          <div className="md:mx-12 flex flex-col md:flex-row gap-8 flex-wrap">
-            {currentImageInfo.map((resource) => (
-              <ImageInfo
-                key={resource.public_id}
-                publicId={resource.public_id}
-                tags={resource.tags}
-                onRemoveFavorite={handleFavouriteChange}
-                currentImageInfo={currentImageInfo}
-              />
-            ))}
-          </div>
+        <div className="md:mx-12 columns-1 sm:columns-2 md:columns-2 lg:columns-3 xl:columns-4 gap-4">
+          {currentImageInfo.map((resource) => (
+            <ImageInfo
+              key={resource.public_id}
+              publicId={resource.public_id}
+              tags={resource.tags}
+              onRemoveFavorite={handleFavouriteChange}
+              currentImageInfo={currentImageInfo}
+            />
+          ))}
         </div>
       </div>
     </div>

@@ -21,8 +21,10 @@ export const useFavoriteData = () => {
     }
   }, [router]);
   useEffect(() => {
-    fetchImageInfo();
-  }, [fetchImageInfo]);
+    if (!imageInfo) {
+      fetchImageInfo();
+    }
+  }, [fetchImageInfo, imageInfo]);
 
   return imageInfo;
 };

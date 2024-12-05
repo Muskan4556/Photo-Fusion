@@ -6,7 +6,6 @@ import ImageInfo from "../components/ImageInfo";
 
 const Gallery = () => {
   const data = useImageData();
-  console.log();
 
   if (!data) {
     return (
@@ -23,7 +22,7 @@ const Gallery = () => {
         <UploadButton />
       </div>
       <div className="my-8">
-        <div className="md:mx-12 flex flex-col md:flex-row gap-8 flex-wrap">
+        <div className="md:mx-12 columns-1 sm:columns-2 md:columns-2 lg:columns-3 xl:columns-4 gap-4">
           {data.map((resource) => (
             <ImageInfo
               key={resource.public_id}
