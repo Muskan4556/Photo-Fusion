@@ -1,35 +1,31 @@
 "use client";
-import UploadButton from "./UploadButton";
-import { useImageData } from "../hooks/gallery/useGalleryData";
+
+import { useGalleryData } from "../client-api/gallery/useGalleryData";
 import Loader from "../components/Loader";
 import ImageInfo from "../components/ImageInfo";
+import SubHeader from "../components/SubHeader";
 
 const Gallery = () => {
-  const data = useImageData();
+  const { imageData, isLoading } = useGalleryData();
 
-  if (!data) {
-    return (
-      <>
-        <Loader />{" "}
-      </>
-    );
+  if (imageData?.length === 0) {
+    return <div className="m-4">No image found ☹️</div>;
   }
 
   return (
     <div className="mt-8 px-8">
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl md:text-4xl font-bold w-[90%]">My Gallery</h1>
-        <UploadButton />
-      </div>
-      <div className="my-8">
+      <SubHeader heading="My Gallery" />
+      <div className="my-8 h-full">
+        {isLoading && <Loader />}
         <div className="md:mx-12 columns-1 sm:columns-2 md:columns-2 lg:columns-3 xl:columns-4 gap-4">
-          {data.map((resource) => (
-            <ImageInfo
-              key={resource.public_id}
-              publicId={resource.public_id}
-              tags={resource.tags}
-            />
-          ))}
+          {imageData &&
+            imageData.map((resource) => (
+              <ImageInfo
+                key={resource.public_id}
+                publicId={resource.public_id}
+                tags={resource.tags}
+              />
+            ))}
         </div>
       </div>
     </div>

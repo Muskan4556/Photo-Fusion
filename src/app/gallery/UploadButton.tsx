@@ -1,13 +1,12 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { useQueryClient } from "@tanstack/react-query";
 import { CloudUpload } from "lucide-react";
-import {
-  CldUploadButton,
-  CloudinaryUploadWidgetResults,
-} from "next-cloudinary";
+import { CldUploadButton } from "next-cloudinary";
 
 const UploadButton = () => {
+  const queryClient = useQueryClient();
   return (
     <Button
       variant={"outline"}
@@ -16,8 +15,13 @@ const UploadButton = () => {
     >
       <div>
         <CldUploadButton
-          onSuccess={(result: CloudinaryUploadWidgetResults) => {
-            console.log(result);
+          onSuccess={() => {
+            new Promise((resolve) => {
+              setTimeout(resolve, 1000);
+            });
+            queryClient.invalidateQueries({
+              queryKey: ["galleryImageInfo"],
+            });
           }}
           uploadPreset="gnimpbu4"
         />

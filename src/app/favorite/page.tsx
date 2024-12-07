@@ -3,18 +3,19 @@
 import { useEffect, useState } from "react";
 import ImageInfo from "../components/ImageInfo";
 import Loader from "../components/Loader";
-import { useFavoriteData } from "../hooks/favorite/useFavouriteData";
+import { useFavoriteData } from "../client-api/favorite/useFavouriteData";
 import { SearchResult } from "@/pages/api/gallery";
+import SubHeader from "../components/SubHeader";
 
 const Favorite = () => {
-  const data = useFavoriteData();
+  const { imageData, isLoading } = useFavoriteData();
   const [currentImageInfo, setCurrentImageInfo] = useState<SearchResult[]>();
 
   useEffect(() => {
-    if (data) {
-      setCurrentImageInfo(data);
+    if (imageData) {
+      setCurrentImageInfo(imageData);
     }
-  }, [data]);
+  }, [imageData]);
 
   const handleFavouriteChange = (
     publicId: string,
@@ -24,31 +25,27 @@ const Favorite = () => {
     setCurrentImageInfo(updatedData);
   };
 
-  if (!data || !currentImageInfo) {
-    return (
-      <>
-        <Loader />{" "}
-      </>
-    );
+  if (imageData?.length === 0) {
+    return <div>No image found ☹️</div>;
   }
+
 
   return (
     <div className="mt-8 px-8">
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl md:text-4xl font-bold w-[90%]">My Favorites</h1>
-        {/* <UploadButton /> */}
-      </div>
-      <div className="my-8">
+      <SubHeader heading="My Favorites" />
+      <div className="my-8 h-full">
+      {isLoading && <Loader />}
         <div className="md:mx-12 columns-1 sm:columns-2 md:columns-2 lg:columns-3 xl:columns-4 gap-4">
-          {currentImageInfo.map((resource) => (
-            <ImageInfo
-              key={resource.public_id}
-              publicId={resource.public_id}
-              tags={resource.tags}
-              onRemoveFavorite={handleFavouriteChange}
-              currentImageInfo={currentImageInfo}
-            />
-          ))}
+          {currentImageInfo &&
+            currentImageInfo.map((resource) => (
+              <ImageInfo
+                key={resource.public_id}
+                publicId={resource.public_id}
+                tags={resource.tags}
+                onRemoveFavorite={handleFavouriteChange}
+                currentImageInfo={currentImageInfo}
+              />
+            ))}
         </div>
       </div>
     </div>

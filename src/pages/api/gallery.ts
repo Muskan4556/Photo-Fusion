@@ -25,15 +25,14 @@ export default async function getImages(
         .max_results(8)
         .execute()) as { resources: SearchResult[] };
 
-      res.status(200).json({ success: true, data: result.resources });
+      res.status(200).json(result.resources);
     } catch (err) {
       console.log("Error in API:", err);
       res.status(500).json({
         message: "Something went wrong",
       });
     }
-  }  else {
+  } else {
     res.status(405).json({ message: "Method not allowed" });
   }
 }
-

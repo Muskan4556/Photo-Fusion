@@ -15,7 +15,7 @@ export default async function getImages(
         .max_results(5)
         .execute()) as { resources: SearchResult[] };
 
-      res.status(200).json({ success: true, data: result.resources });
+      res.status(200).json(result.resources);
     } catch (err) {
       console.log("Error in API:", err);
       res.status(500).json({

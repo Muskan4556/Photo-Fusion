@@ -3,7 +3,7 @@
 import { Heart } from "lucide-react";
 import { CldImage } from "next-cloudinary";
 import { useState } from "react";
-import useAddAndRemoveFavoriteTag from "../hooks/useAddAndRemoveFavoriteTag";
+import useAddOrRemoveFavoriteTag from "../client-api/useAddAndRemoveFavoriteTag";
 import { SearchResult } from "@/pages/api/gallery";
 import { ImageMenu } from "./ImageMenu";
 
@@ -20,7 +20,7 @@ const ImageInfo = ({
   onRemoveFavorite,
   currentImageInfo,
 }: Props) => {
-  const addAndRemoveFavoriteTag = useAddAndRemoveFavoriteTag();
+  const { addRemoveFavoriteTag } = useAddOrRemoveFavoriteTag();
 
   const isFavoriteTag =
     Array.isArray(tags) && tags.some((t: string) => t === "favorite");
@@ -29,8 +29,7 @@ const ImageInfo = ({
 
   const handleFavorite = async () => {
     setFavorite((prev) => !prev);
-    addAndRemoveFavoriteTag(publicId);
-    await new Promise((resolve) => setTimeout(resolve, 300));
+    addRemoveFavoriteTag(publicId);
     if (onRemoveFavorite && currentImageInfo) {
       onRemoveFavorite(publicId, currentImageInfo);
     }
