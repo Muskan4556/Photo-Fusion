@@ -12,22 +12,25 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { PlusCircle } from "lucide-react";
 import { useRef, useState } from "react";
-import useCreateNewFolder from "../client-api/folder/useCreateNewFolder";
+import useAddImageToFolder from "../client-api/folder/useAddImageToFolder";
+import { SearchResult } from "@/pages/api/gallery";
 
 type Props = {
-  imageUrl: string;
+  imageData: SearchResult;
+  setIsDropdownOpen: () => void;
 };
 
-const ImageDialog = ({ imageUrl }: Props) => {
+const ImageDialog = ({ imageData, setIsDropdownOpen }: Props) => {
   const albumNameRef = useRef<HTMLInputElement>(null);
   const [isOpen, setIsOpen] = useState(false);
-  const { addImageToFolder } = useCreateNewFolder();
+  const { addImageToFolder } = useAddImageToFolder();
 
   const handleSubmit = () => {
     setIsOpen(false);
+    setIsDropdownOpen();
     const folderName = albumNameRef.current?.value as string;
     if (folderName) {
-      addImageToFolder({ folderName, imageUrl });
+      addImageToFolder({ folderName, imageData });
     }
   };
 

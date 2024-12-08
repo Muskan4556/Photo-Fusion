@@ -71,7 +71,6 @@ export function AppSidebar() {
             ) : (
               <Collapsible
                 key={title}
-                // defaultOpen
                 className="group/collapsible"
               >
                 <CollapsibleTrigger className="w-full">

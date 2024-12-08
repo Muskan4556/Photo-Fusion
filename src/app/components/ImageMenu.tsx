@@ -13,30 +13,32 @@ import {
 import ImageDialog from "./ImageDialog";
 import useGetAllRootFolder from "../client-api/folder/useGetAllRootFolders";
 import { useEffect, useState } from "react";
-import useCreateNewFolder from "../client-api/folder/useCreateNewFolder";
+import useCreateNewFolder from "../client-api/folder/useAddImageToFolder";
+import { SearchResult } from "@/pages/api/gallery";
 
 type Props = {
-  imageUrl: string;
+  imageData: SearchResult;
 };
 
 export type RootFolder = {
   name: string;
 };
 
-export function ImageMenu({ imageUrl }: Props) {
+export function ImageMenu({ imageData }: Props) {
   const { rootFoldersData } = useGetAllRootFolder();
-
-  const [rootData, setRootData] = useState(rootFoldersData);
   const { addImageToFolder } = useCreateNewFolder();
+  const [rootData, setRootData] = useState(rootFoldersData);
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleAddImagetoAlbum = (folderName: string) => {
-    addImageToFolder({ folderName, imageUrl });
+    addImageToFolder({ folderName, imageData });
+    setIsOpen(false);
   };
 
-  useEffect(() => setRootData(rootData), []);
+  useEffect(() => setRootData(rootData), [rootData]);
 
   return (
-    <DropdownMenu>
+    <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
       <DropdownMenuTrigger asChild>
         <EllipsisVertical
           className="cursor-pointer hover:text-blue-500 text-white"
@@ -66,7 +68,7 @@ export function ImageMenu({ imageUrl }: Props) {
 
               <DropdownMenuSeparator />
               <DropdownMenuItem asChild>
-                <ImageDialog imageUrl={imageUrl} />
+                <ImageDialog imageData={imageData} setIsDropdownOpen={()=>setIsOpen(false)} />
               </DropdownMenuItem>
             </DropdownMenuSubContent>
           </DropdownMenuPortal>

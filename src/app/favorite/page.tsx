@@ -29,23 +29,20 @@ const Favorite = () => {
     return <div>No image found ☹️</div>;
   }
 
-
   return (
     <div className="mt-8 px-8">
       <SubHeader heading="My Favorites" />
       <div className="my-8 h-full">
-      {isLoading && <Loader />}
+        {isLoading && <Loader />}
         <div className="md:mx-12 columns-1 sm:columns-2 md:columns-2 lg:columns-3 xl:columns-4 gap-4">
           {currentImageInfo &&
             currentImageInfo.map((resource) => (
               <ImageInfo
                 key={resource.public_id}
-                publicId={resource.public_id}
                 tags={resource.tags}
-                imageUrl={resource.url}
+                imageData={resource}
                 onRemoveFavorite={handleFavouriteChange}
                 currentImageInfo={currentImageInfo}
-                
               />
             ))}
         </div>

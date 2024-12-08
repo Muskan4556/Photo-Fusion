@@ -8,32 +8,32 @@ import { SearchResult } from "@/pages/api/gallery";
 import { ImageMenu } from "./ImageMenu";
 
 type Props = {
-  publicId: string;
-  imageUrl: string
+  imageData: SearchResult;
   tags?: string[];
   currentImageInfo?: SearchResult[];
   onRemoveFavorite?: (publicId: string, currentInfo: SearchResult[]) => void;
 };
 
 const ImageInfo = ({
-  publicId,
+  imageData,
   tags,
-  imageUrl,
   onRemoveFavorite,
   currentImageInfo,
 }: Props) => {
   const { addRemoveFavoriteTag } = useAddOrRemoveFavoriteTag();
 
   const isFavoriteTag =
-    Array.isArray(tags) && tags.some((t: string) => t === "favorite");
+    Array.isArray(tags) && tags.includes("favorite");
 
   const [favorite, setFavorite] = useState(isFavoriteTag);
+  console.log(favorite);
+  
 
   const handleFavorite = async () => {
     setFavorite((prev) => !prev);
-    addRemoveFavoriteTag(publicId);
+    addRemoveFavoriteTag(imageData.public_id);
     if (onRemoveFavorite && currentImageInfo) {
-      onRemoveFavorite(publicId, currentImageInfo);
+      onRemoveFavorite(imageData.public_id, currentImageInfo);
     }
   };
 
@@ -51,16 +51,15 @@ const ImageInfo = ({
               strokeWidth={2}
               style={{ transition: "0.3s ease" }}
             />
-            <ImageMenu imageUrl={imageUrl} />
+            <ImageMenu imageData={imageData} />
           </div>
         </div>
         <CldImage
-        onClick={()=> alert(publicId)}
           className="rounded-md"
           width="400"
           height="300"
           alt="Description of my image"
-          src={publicId}
+          src={imageData.public_id}
           sizes="100vw"
         />
       </div>

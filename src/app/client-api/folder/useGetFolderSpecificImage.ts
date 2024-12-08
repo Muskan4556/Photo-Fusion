@@ -19,9 +19,9 @@ const useGetFolderSpecificImage = (folderName: string) => {
     if (!response.ok) {
       throw new Error("Unable to get images");
     }
-    
+
     const data = await response.json();
-    return data;  // Return the response data
+    return data; // Return the response data
   };
 
   const {

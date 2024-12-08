@@ -15,11 +15,15 @@ const UploadButton = () => {
     >
       <div>
         <CldUploadButton
-          onSuccess={() => {
+          onSuccess={async () => {
             new Promise((resolve) => {
               setTimeout(resolve, 1000);
             });
-            queryClient.invalidateQueries({
+            // Invalidate the query to mark it stale
+            queryClient.invalidateQueries({ queryKey: ["galleryImageInfo"] });
+
+            // Force refetch to ensure fresh data rendering
+            await queryClient.refetchQueries({
               queryKey: ["galleryImageInfo"],
             });
           }}

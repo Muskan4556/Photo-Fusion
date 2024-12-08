@@ -14,8 +14,9 @@ export default async function handler(
     const data = (await cloudinary.api.resources({
       type: "upload",
       prefix: `${folderName}/`,
-      
       max_results: 25,
+      tags: true
+      
     })) as { resources: SearchResult[] };
     res.status(200).json(data.resources);
   } catch (err) {
