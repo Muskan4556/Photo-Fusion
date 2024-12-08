@@ -42,8 +42,10 @@ const Favorite = () => {
                 key={resource.public_id}
                 publicId={resource.public_id}
                 tags={resource.tags}
+                imageUrl={resource.url}
                 onRemoveFavorite={handleFavouriteChange}
                 currentImageInfo={currentImageInfo}
+                
               />
             ))}
         </div>

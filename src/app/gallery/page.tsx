@@ -24,6 +24,7 @@ const Gallery = () => {
                 key={resource.public_id}
                 publicId={resource.public_id}
                 tags={resource.tags}
+                imageUrl={resource.url}
               />
             ))}
         </div>

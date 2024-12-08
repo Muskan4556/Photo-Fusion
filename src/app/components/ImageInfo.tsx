@@ -9,6 +9,7 @@ import { ImageMenu } from "./ImageMenu";
 
 type Props = {
   publicId: string;
+  imageUrl: string
   tags?: string[];
   currentImageInfo?: SearchResult[];
   onRemoveFavorite?: (publicId: string, currentInfo: SearchResult[]) => void;
@@ -17,6 +18,7 @@ type Props = {
 const ImageInfo = ({
   publicId,
   tags,
+  imageUrl,
   onRemoveFavorite,
   currentImageInfo,
 }: Props) => {
@@ -49,10 +51,11 @@ const ImageInfo = ({
               strokeWidth={2}
               style={{ transition: "0.3s ease" }}
             />
-            <ImageMenu />
+            <ImageMenu imageUrl={imageUrl} />
           </div>
         </div>
         <CldImage
+        onClick={()=> alert(publicId)}
           className="rounded-md"
           width="400"
           height="300"
