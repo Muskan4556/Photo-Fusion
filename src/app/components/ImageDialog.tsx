@@ -13,7 +13,7 @@ import { Label } from "@/components/ui/label";
 import { PlusCircle } from "lucide-react";
 import { useRef, useState } from "react";
 import useAddImageToFolder from "../client-api/folder/useAddImageToFolder";
-import { SearchResult } from "@/pages/api/gallery";
+import { SearchResult } from "@/app/types";
 
 type Props = {
   imageData: SearchResult;
@@ -25,13 +25,13 @@ const ImageDialog = ({ imageData, setIsDropdownOpen }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
   const { addImageToFolder } = useAddImageToFolder();
 
-  const handleSubmit = () => {
-    setIsOpen(false);
+  const handleSubmit = async () => {
     setIsDropdownOpen();
     const folderName = albumNameRef.current?.value as string;
     if (folderName) {
-      addImageToFolder({ folderName, imageData });
+      await addImageToFolder({ folderName, imageData });
     }
+    setIsOpen(false);
   };
 
   return (

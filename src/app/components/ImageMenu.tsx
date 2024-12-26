@@ -14,7 +14,7 @@ import ImageDialog from "./ImageDialog";
 import useGetAllRootFolder from "../client-api/folder/useGetAllRootFolders";
 import { useEffect, useState } from "react";
 import useCreateNewFolder from "../client-api/folder/useAddImageToFolder";
-import { SearchResult } from "@/pages/api/gallery";
+import { SearchResult } from "@/app/types";
 
 type Props = {
   imageData: SearchResult;
@@ -68,7 +68,10 @@ export function ImageMenu({ imageData }: Props) {
 
               <DropdownMenuSeparator />
               <DropdownMenuItem asChild>
-                <ImageDialog imageData={imageData} setIsDropdownOpen={()=>setIsOpen(false)} />
+                <ImageDialog
+                  imageData={imageData}
+                  setIsDropdownOpen={() => setIsOpen(false)}
+                />
               </DropdownMenuItem>
             </DropdownMenuSubContent>
           </DropdownMenuPortal>

@@ -1,5 +1,7 @@
-import { SearchResult } from "@/pages/api/gallery";
+import moveImageToFolder from "@/app/actions/addImageToFolder";
+import { SearchResult } from "@/app/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+
 import { toast } from "sonner";
 
 const useAddImageToFolder = () => {
@@ -11,24 +13,23 @@ const useAddImageToFolder = () => {
     folderName: string;
     imageData: SearchResult;
   }) => {
-    const response = await fetch("/api/addImageToFolder", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ folderName, imageData }),
-    });
-    if (!response.ok) {
+    const response = await moveImageToFolder(folderName, imageData);
+    if (!response) {
       throw new Error("Failed to create new folder");
     }
+
+    return response;
+
   };
 
   const { mutateAsync: addImageToFolder, reset } = useMutation({
     mutationFn: createNewFolder,
-    onSuccess: async() => {
-      toast.success("Added image");
+    onSuccess: async () => {
+      toast.success(`Added image `);
       await queryClient.invalidateQueries({ queryKey: ["getAllRootFolder"] });
-      await queryClient.invalidateQueries({ queryKey: ["folderSpecificImage"] });
+      await queryClient.invalidateQueries({
+        queryKey: ["folderSpecificImage"],
+      });
     },
     onError: (error) => {
       toast.error(error?.message);

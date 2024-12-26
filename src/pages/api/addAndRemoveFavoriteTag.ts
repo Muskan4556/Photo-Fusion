@@ -6,7 +6,7 @@ export default async function handler(
   res: NextApiResponse
 ) {
   if (req.method === "POST") {
-    const { publicId, tag } = req.body;
+    const { publicId, tag } = req.body; // tag == favorite
     try {
       if (!publicId || !tag) {
         return res
@@ -15,9 +15,7 @@ export default async function handler(
       }
       const resource = await cloudinary.api.resource(publicId);
       const tagArray = resource.tags || [];
-      const alreadyTaggedAsFavorite = tagArray.some(
-        (t: string) => t === "favorite"
-      );
+      const alreadyTaggedAsFavorite = tagArray.includes(tag)
 
       if (alreadyTaggedAsFavorite) {
         await cloudinary.uploader.remove_tag(tag, [publicId]);

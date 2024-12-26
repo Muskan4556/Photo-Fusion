@@ -1,21 +1,17 @@
 "use client";
-import { SearchResult } from "@/pages/api/gallery";
+
+import getFavoriteImages from "@/app/actions/getFavoriteImages";
+import { SearchResult } from "@/app/types";
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 
 export const useFavoriteData = () => {
   const getImageInfo = async (): Promise<SearchResult[]> => {
-    const response = await fetch("/api/favorite", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    if (!response.ok) {
+    const response = await getFavoriteImages()
+    if (!response) {
       throw new Error("Failed to get images data");
     }
-    return response.json();
+    return response;
   };
 
   const {

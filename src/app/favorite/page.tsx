@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import ImageInfo from "../components/ImageInfo";
 import Loader from "../components/Loader";
 import { useFavoriteData } from "../client-api/favorite/useFavouriteData";
-import { SearchResult } from "@/pages/api/gallery";
 import SubHeader from "../components/SubHeader";
+import { SearchResult } from "../types";
 
 const Favorite = () => {
   const { imageData, isLoading } = useFavoriteData();

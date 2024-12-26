@@ -4,8 +4,8 @@ import { Heart } from "lucide-react";
 import { CldImage } from "next-cloudinary";
 import { useState } from "react";
 import useAddOrRemoveFavoriteTag from "../client-api/useAddAndRemoveFavoriteTag";
-import { SearchResult } from "@/pages/api/gallery";
 import { ImageMenu } from "./ImageMenu";
+import { SearchResult } from "../types";
 
 type Props = {
   imageData: SearchResult;
@@ -26,12 +26,12 @@ const ImageInfo = ({
     Array.isArray(tags) && tags.includes("favorite");
 
   const [favorite, setFavorite] = useState(isFavoriteTag);
-  console.log(favorite);
   
 
   const handleFavorite = async () => {
     setFavorite((prev) => !prev);
-    addRemoveFavoriteTag(imageData.public_id);
+    await addRemoveFavoriteTag(imageData.public_id);
+    
     if (onRemoveFavorite && currentImageInfo) {
       onRemoveFavorite(imageData.public_id, currentImageInfo);
     }

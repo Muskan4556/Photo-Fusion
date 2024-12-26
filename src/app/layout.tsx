@@ -6,7 +6,7 @@ import { ThemeProvider } from "./components/ThemeProvider";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "./components/AppSidebar";
 import { Toaster } from "sonner";
-import { TanStackProvider } from "./components/TanStackProvider";
+import { TanStackProvider } from "../lib/TanStackProvider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -55,7 +55,7 @@ export default function RootLayout({
                 {children}
                 <Toaster
                   visibleToasts={1}
-                  position="top-right"
+                  position="bottom-right"
                   richColors
                   duration={2000}
                 />
