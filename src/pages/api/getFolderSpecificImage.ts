@@ -1,6 +1,7 @@
-import { v2 as cloudinary } from "cloudinary";
+
 import { NextApiRequest, NextApiResponse } from "next";
 import { SearchResult } from "./gallery";
+import cloudinary from "@/lib/cloudinary";
 
 export default async function handler(
   req: NextApiRequest,

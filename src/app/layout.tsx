@@ -6,7 +6,7 @@ import { ThemeProvider } from "./components/ThemeProvider";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "./components/AppSidebar";
 import { Toaster } from "sonner";
-import { QueryClientWrapper } from "./components/QueryClientWrapper";
+import { TanStackProvider } from "./components/TanStackProvider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -46,7 +46,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <SidebarProvider>
-            <QueryClientWrapper >
+            <TanStackProvider >
               <div>
                 <AppSidebar />
               </div>
@@ -60,7 +60,7 @@ export default function RootLayout({
                   duration={2000}
                 />
               </main>
-            </QueryClientWrapper>
+            </TanStackProvider>
           </SidebarProvider>
         </ThemeProvider>
       </body>
