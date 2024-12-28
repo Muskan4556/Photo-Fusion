@@ -10,7 +10,7 @@ const SubHeader = ({ heading }: Props) => {
       <h1 className="text-2xl md:text-4xl font-bold w-[90%]">
         {heading}
       </h1>
-      <UploadButton />
+      <div className={` ${heading.split(" ")[0] === "Edit" && "md:block hidden"}`}><UploadButton /></div>
     </div>
   );
 };

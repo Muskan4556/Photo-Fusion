@@ -14,6 +14,7 @@ import { PlusCircle } from "lucide-react";
 import { useRef, useState } from "react";
 import useAddImageToFolder from "../client-api/folder/useAddImageToFolder";
 import { SearchResult } from "@/app/types";
+import { toast } from "sonner";
 
 type Props = {
   imageData: SearchResult;
@@ -28,6 +29,10 @@ const ImageDialog = ({ imageData, setIsDropdownOpen }: Props) => {
   const handleSubmit = async () => {
     setIsDropdownOpen();
     const folderName = albumNameRef.current?.value as string;
+    if(imageData.public_id.split("/")[0] === folderName){
+      toast.success("Already added to this album");
+      return
+    }
     if (folderName) {
       await addImageToFolder({ folderName, imageData });
     }

@@ -1,5 +1,5 @@
 "use server"
-// actions/getImages.js
+
 import cloudinary from "@/lib/cloudinary";
 import { SearchResult } from "@/app/types";
 

@@ -16,8 +16,8 @@ import {
 } from "@/components/ui/sidebar";
 import { Collapsible } from "@radix-ui/react-collapsible";
 
-import { ChevronDown } from "lucide-react";
-import { Files, Heart, House, Images } from "lucide-react";
+import { ChevronDown, EllipsisVertical } from "lucide-react";
+import { Heart, House, Images } from "lucide-react";
 import Link from "next/link";
 import useGetAllRootFolder from "../client-api/folder/useGetAllRootFolders";
 import { RootFolder } from "./ImageMenu";
@@ -28,15 +28,15 @@ const items = [
     url: "/",
     icon: <House style={{ height: "100%", width: "100%" }} />,
   },
-  {
-    title: "Gallery",
-    url: "/gallery",
-    icon: <Images style={{ height: "100%", width: "100%" }} />,
-  },
+  // {
+  //   title: "Gallery",
+  //   url: "/gallery",
+  //   icon: <Files style={{ height: "100%", width: "100%" }} />,
+  // },
   {
     title: "Albums",
     url: "#",
-    icon: <Files style={{ height: "100%", width: "100%" }} />,
+    icon: <Images style={{ height: "100%", width: "100%" }} />,
   },
   {
     title: "Favorites",
@@ -69,10 +69,7 @@ export function AppSidebar() {
                 </SidebarMenuButton>
               </SidebarMenuItem>
             ) : (
-              <Collapsible
-                key={title}
-                className="group/collapsible"
-              >
+              <Collapsible key={title} className="group/collapsible">
                 <CollapsibleTrigger className="w-full">
                   <SidebarMenuItem className="py-1 px-4 w-full">
                     <SidebarMenuButton asChild className="px-2 space-x-1">
@@ -90,12 +87,20 @@ export function AppSidebar() {
                       rootFoldersData.folders.map((folder: RootFolder) => (
                         <SidebarMenuItem key={folder.name}>
                           <SidebarMenuButton asChild>
-                            <Link
-                              href={`/albums/${folder.name}`}
-                              className="text-md tracking-normal"
-                            >
-                              {folder.name}
-                            </Link>
+                            <div className="flex justify-between">
+                              <Link
+                                href={`/albums/${folder.name}`}
+                                className="text-md tracking-normal"
+                              >
+                                {folder.name}
+                              </Link>
+                              <EllipsisVertical
+                                onClick={() => console.log("clicked")}
+                                className="z-10 cursor-pointer"
+                                strokeWidth={2}
+                                style={{ transition: "0.3s ease" }}
+                              />
+                            </div>
                           </SidebarMenuButton>
                         </SidebarMenuItem>
                       ))}

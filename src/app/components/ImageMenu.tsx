@@ -1,4 +1,10 @@
-import { Delete, Download, EllipsisVertical, FolderHeart } from "lucide-react";
+import {
+  Delete,
+  Download,
+  Edit,
+  EllipsisVertical,
+  FolderHeart,
+} from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,6 +21,8 @@ import useGetAllRootFolder from "../client-api/folder/useGetAllRootFolders";
 import { useEffect, useState } from "react";
 import useCreateNewFolder from "../client-api/folder/useAddImageToFolder";
 import { SearchResult } from "@/app/types";
+import Link from "next/link";
+import { toast } from "sonner";
 
 type Props = {
   imageData: SearchResult;
@@ -31,6 +39,10 @@ export function ImageMenu({ imageData }: Props) {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleAddImagetoAlbum = (folderName: string) => {
+    if(imageData.public_id.split("/")[0] === folderName){
+      toast.success("Already added to this album");
+      return
+    }
     addImageToFolder({ folderName, imageData });
     setIsOpen(false);
   };
@@ -76,6 +88,18 @@ export function ImageMenu({ imageData }: Props) {
             </DropdownMenuSubContent>
           </DropdownMenuPortal>
         </DropdownMenuSub>
+        <DropdownMenuItem>
+          <>
+            <Edit />
+            <Link
+              href={`/edit?publicId=/${encodeURIComponent(
+                imageData.public_id
+              )}`}
+            >
+              <span>Edit</span>
+            </Link>
+          </>
+        </DropdownMenuItem>
         <DropdownMenuItem>
           <Delete />
           <span>Delete</span>
