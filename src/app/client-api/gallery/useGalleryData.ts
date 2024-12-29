@@ -4,23 +4,12 @@ import { SearchResult } from "@/app/types";
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 
-export const useGalleryData = () => {
-  // const getImageInfo = async (): Promise<SearchResult[]> => {
-  //   const response = await fetch("/api/gallery", {
-  //     method: "GET",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //   });
-
-  //   if (!response.ok) {
-  //     throw new Error("Failed to get images data");
-  //   }
-  //   return response.json();
-
+export const useGalleryData = (
+  searchParams: { search: string } = { search: "" }
+) => {
   const getImageInfo = async (): Promise<SearchResult[]> => {
     try {
-      const response = await getGalleryImages();
+      const response = await getGalleryImages({ searchParams });
       if (!response) {
         throw new Error("No image data found");
       }
@@ -36,7 +25,7 @@ export const useGalleryData = () => {
     isLoading,
     error,
   } = useQuery({
-    queryKey: ["galleryImageInfo"],
+    queryKey: ["galleryImageInfo", { searchParams }],
     queryFn: getImageInfo,
   });
 

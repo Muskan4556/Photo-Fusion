@@ -1,8 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-// import { Input } from "@/components/ui/input";
-// import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 import { CldImage } from "next-cloudinary";
 import { useState } from "react";
 
@@ -12,7 +11,7 @@ type Props = {
 
 export default function EditImage({ publicId }: Props) {
   const [filter, setFilter] = useState("");
-  const [search, setSearch] = useState("");
+  const [promptt, setPrompt] = useState("");
 
   return (
     <div>
@@ -57,14 +56,21 @@ export default function EditImage({ publicId }: Props) {
         </Button>
       </div>
 
-      {/* <div className="mt-4 flex gap-4">
+      <div className="mt-4 flex gap-4">
         <Input
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={(e) => setPrompt(e.target.value)}
+          value={promptt}
           className="w-auto"
-          placeholder="Object, color"
+          placeholder="Enter prompt for generative fill"
         ></Input>
-        <Button variant={"outline"}>Apply</Button>
-      </div> */}
+        <Button
+          className="w-auto"
+          variant={"outline"}
+          onClick={() => setFilter("generative-fill")}
+        >
+          Apply
+        </Button>
+      </div>
 
       <div className="flex lg:flex-row flex-col lg:gap-8 md:gap-2 gap-2">
         <CldImage
@@ -85,7 +91,9 @@ export default function EditImage({ publicId }: Props) {
             src={publicId}
             sizes="100vw"
             crop="pad" // Returns the given size with padding
-            fillBackground
+            fillBackground={{
+              prompt: promptt,
+            }}
           />
         )}
 

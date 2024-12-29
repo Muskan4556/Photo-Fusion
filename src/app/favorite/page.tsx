@@ -26,7 +26,7 @@ const Favorite = () => {
   };
 
   if (imageData?.length === 0) {
-    return <div>No image found ☹️</div>;
+    return <div className="m-4">No image found ☹️</div>;
   }
 
   return (

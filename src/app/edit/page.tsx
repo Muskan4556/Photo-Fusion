@@ -4,9 +4,9 @@ import EditImage from "./EditImage";
 export default async function Edit({
   searchParams,
 }: {
-  searchParams: {
+  searchParams: Promise<{
     publicId: string;
-  };
+  }>;
 }) {
   const params = await searchParams;
 
