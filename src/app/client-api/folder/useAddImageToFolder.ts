@@ -22,10 +22,10 @@ const useAddImageToFolder = () => {
 
   };
 
-  const { mutateAsync: addImageToFolder, reset } = useMutation({
+  const { mutateAsync: addImageToFolder, reset, status } = useMutation({
     mutationFn: createNewFolder,
     onSuccess: async () => {
-      toast.success(`Added image `);
+      toast.success(`Image added`);
       await queryClient.invalidateQueries({ queryKey: ["getAllRootFolder"] });
       await queryClient.invalidateQueries({
         queryKey: ["folderSpecificImage"],
@@ -39,6 +39,7 @@ const useAddImageToFolder = () => {
 
   return {
     addImageToFolder,
+    status
   };
 };
 

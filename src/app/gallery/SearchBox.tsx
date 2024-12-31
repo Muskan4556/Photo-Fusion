@@ -18,7 +18,7 @@ export default function SearchBox() {
     <div className="mb-8">
       <form onSubmit={handleSearch} className="flex gap-2">
         <Input
-          placeholder="Search by Tag name"
+          placeholder="Tag name. eg. people"
           value={tagName}
           onChange={(e) => setTagName(e.target.value)}
           className="w-auto mt-1"

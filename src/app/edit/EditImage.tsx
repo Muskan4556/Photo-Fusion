@@ -92,7 +92,7 @@ export default function EditImage({ publicId }: Props) {
             sizes="100vw"
             crop="pad" // Returns the given size with padding
             fillBackground={{
-              prompt: promptt,
+              prompt: promptt || "",
             }}
           />
         )}

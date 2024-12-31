@@ -77,8 +77,8 @@ const useAddOrRemoveFavoriteTag = () => {
 
     onSuccess: async () => {
       toast.success("Updated Successfully");
-      await queryClient.refetchQueries({ queryKey: ["galleryImageInfo"] });
       await queryClient.refetchQueries({ queryKey: ["favoriteImageInfo"] });
+      await queryClient.refetchQueries({ queryKey: ["galleryImageInfo"] });
     },
   });
 

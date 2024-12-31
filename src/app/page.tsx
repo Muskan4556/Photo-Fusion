@@ -1,9 +1,8 @@
-import Gallery from "./gallery/page";
 
-export default async function Home() {
-  return (
-    <>
-      <Gallery />
-    </>
-  );
+import { redirect } from "next/navigation";
+
+export default function Home() {
+  redirect("/gallery"); 
+
+  return null; 
 }

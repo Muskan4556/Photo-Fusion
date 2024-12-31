@@ -16,16 +16,23 @@ import {
 } from "@/components/ui/sidebar";
 import { Collapsible } from "@radix-ui/react-collapsible";
 
-import { ChevronDown, EllipsisVertical } from "lucide-react";
+import {
+  ChevronDown,
+  Trash,
+} from "lucide-react";
 import { Heart, House, Images } from "lucide-react";
 import Link from "next/link";
 import useGetAllRootFolder from "../client-api/folder/useGetAllRootFolders";
 import { RootFolder } from "./ImageMenu";
+import deleteFolder from "../actions/deleteFolder";
+import { useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 const items = [
   {
     title: "Home",
-    url: "/",
+    url: "/gallery",
     icon: <House style={{ height: "100%", width: "100%" }} />,
   },
   // {
@@ -47,6 +54,24 @@ const items = [
 
 export function AppSidebar() {
   const { rootFoldersData } = useGetAllRootFolder();
+  const queryClient = useQueryClient();
+  const router = useRouter();
+
+  const handleDeletFolder = async (folderName: string) => {
+    try {
+      await deleteFolder(folderName);
+      // Invalidate the query to mark it stale
+      await queryClient.invalidateQueries({ queryKey: ["getAllRootFolder"] });
+      // Force refetch to ensure fresh data rendering
+      await queryClient.refetchQueries({ queryKey: ["getAllRootFolder"] });
+      router.push("/gallery");
+      toast.success("Folder deleted successfully");
+    } catch (err) {
+      console.log(err);
+      toast.error("Failed to delete folder");
+    }
+  };
+
   return (
     <Sidebar>
       <SidebarHeader className="pt-8 -mb-1 px-4 md:text-2xl text-xl font-bold tracking-tight text-blue-600">
@@ -94,11 +119,15 @@ export function AppSidebar() {
                               >
                                 {folder.name}
                               </Link>
-                              <EllipsisVertical
-                                onClick={() => console.log("clicked")}
-                                className="z-10 cursor-pointer"
+
+                              <Trash
+                                onClick={() => handleDeletFolder(folder.name)}
+                                className="cursor-pointer hover:text-blue-500"
                                 strokeWidth={2}
-                                style={{ transition: "0.3s ease" }}
+                                style={{
+                                  transition: "0.3s ease",
+                                  zIndex: 10,
+                                }}
                               />
                             </div>
                           </SidebarMenuButton>

@@ -9,7 +9,7 @@ export default async function getFavoriteImages() {
       .expression("resource_type:image AND tags=favorite")
       .sort_by("created_at", "desc")
       .with_field("tags")
-      .max_results(5)
+      .max_results(15)
       .execute()) as { resources: SearchResult[] };
     return result.resources;
   } catch (err) {

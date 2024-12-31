@@ -14,6 +14,7 @@ import { PlusCircle } from "lucide-react";
 import { useRef, useState } from "react";
 import useAddImageToFolder from "../client-api/folder/useAddImageToFolder";
 import { SearchResult } from "@/app/types";
+import LoadingButton from "./LoadingButton";
 import { toast } from "sonner";
 
 type Props = {
@@ -24,19 +25,20 @@ type Props = {
 const ImageDialog = ({ imageData, setIsDropdownOpen }: Props) => {
   const albumNameRef = useRef<HTMLInputElement>(null);
   const [isOpen, setIsOpen] = useState(false);
-  const { addImageToFolder } = useAddImageToFolder();
+  const { addImageToFolder, status } = useAddImageToFolder();
 
   const handleSubmit = async () => {
-    setIsDropdownOpen();
     const folderName = albumNameRef.current?.value as string;
-    if(imageData.public_id.split("/")[0] === folderName){
+    if (imageData.public_id.split("/")[0] === folderName) {
       toast.success("Already added to this album");
-      return
+      return;
     }
     if (folderName) {
       await addImageToFolder({ folderName, imageData });
     }
-    setIsOpen(false);
+
+    setIsDropdownOpen();
+    setIsOpen(false);   
   };
 
   return (
@@ -69,9 +71,13 @@ const ImageDialog = ({ imageData, setIsDropdownOpen }: Props) => {
           </div>
         </div>
         <DialogFooter>
-          <Button type="submit" onClick={handleSubmit}>
-            Add to Album
-          </Button>
+          {status === "pending" ? (
+            <LoadingButton value=" Add to Album" />
+          ) : (
+            <Button type="submit" onClick={handleSubmit}>
+              Add to Album
+            </Button>
+          )}
         </DialogFooter>
       </DialogContent>
     </Dialog>

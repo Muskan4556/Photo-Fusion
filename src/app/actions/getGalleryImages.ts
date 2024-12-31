@@ -20,7 +20,7 @@ export async function getGalleryImages({
       )
       .sort_by("created_at", "desc")
       .with_field("tags")
-      .max_results(8)
+      .max_results(15)
       .execute()) as { resources: SearchResult[] };
 
     return result.resources;

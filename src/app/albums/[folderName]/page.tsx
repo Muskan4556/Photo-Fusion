@@ -6,7 +6,6 @@ import Loader from "@/app/components/Loader";
 import SubHeader from "@/app/components/SubHeader";
 import { SearchResult } from "@/app/types";
 import { usePathname } from "next/navigation";
-// import { useEffect, useState } from "react";
 
 const Gallery = () => {
   const pathname = usePathname();
@@ -15,15 +14,13 @@ const Gallery = () => {
   const { folderSpecificImage, isLoading } =
     useGetFolderSpecificImage(folderName);
 
-  // if (folderSpecificImage?.length === 0) {
-  //   return <div className="m-4">No image found ☹️</div>;
-  // }
-
   return (
     <div className="mt-8 px-8">
       {folderName && <SubHeader heading={`Album ${folderName}`} />}
       <div className="my-8 h-full">
-        {folderSpecificImage?.length === 0 && <div className="m-4">No image found ☹️</div>}
+        {folderSpecificImage?.length === 0 && (
+          <div className="m-4">No image found ☹️</div>
+        )}
         {isLoading && <Loader />}
         <div className="md:mx-12 columns-1 sm:columns-2 md:columns-2 lg:columns-3 xl:columns-4 gap-4">
           {folderSpecificImage &&
